@@ -37,8 +37,6 @@ MASTERPOOL="Data"
 # Bsp. für Test: Ext-Test
 BACKUPPOOL="Ext-Backup"
 BACKUPKEY="/root/scripts/keys/Ext-Backup-key.key"
-TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
-BACKUPLOG="/root/scripts/logs/$TIMESTAMP-backup.log"
 
 # Datasets, which should be included in the Backup (Child dataset are added automatically)
 # Bsp for Test: MAINDATASETS=("test-perm" "archive") #here
@@ -55,6 +53,16 @@ email="email-adress" # receiver #here
 
 # ######################################################################
 # ####################### Variables ####################################
+
+SCRIPTLOCATION=$(pwd)
+
+# Check for existing log directory and make new if necessary
+if [ ! -d ./$SCRIPTLOCATION/logs ]; then
+	mkdir -p ./$SCRIPTLOCATION/logs
+fi
+
+TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
+BACKUPLOG="$SCRIPTLOCATION/logs/$TIMESTAMP-backup.log"
 
 # Scrub only once a month (30 days * 24h * 3600sec = 2592000)
 # from https://gist.github.com/petervanderdoes/bd6660302404ed5b094d
