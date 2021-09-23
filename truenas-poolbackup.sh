@@ -58,7 +58,7 @@ SCRIPTLOCATION=$(pwd)
 
 # Check for existing log directory and make new if necessary
 if [ ! -d ./$SCRIPTLOCATION/logs ]; then
-	mkdir -p ./$SCRIPTLOCATION/logs
+  mkdir -p ./$SCRIPTLOCATION/logs
 fi
 
 TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
@@ -132,7 +132,9 @@ done
 zpool import $BACKUPPOOL
 
 # Unlock Pool
-zfs load-key -r $BACKUPPOOL < $BACKUPKEY
+if [ "$BACKUPKEY" != "" ]
+  zfs load-key -r $BACKUPPOOL < $BACKUPKEY
+fi
 
 # Log Status pf Backup-Pool
 zpool status $BACKUPPOOL >> ${BACKUPLOG}
